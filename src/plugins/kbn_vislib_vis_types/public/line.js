@@ -15,6 +15,7 @@ define(function (require) {
           addTooltip: true,
           addLegend: true,
           showCircles: true,
+          showAverageLine: false,
           smoothLines: false,
           interpolate: 'linear',
           scale: 'linear',

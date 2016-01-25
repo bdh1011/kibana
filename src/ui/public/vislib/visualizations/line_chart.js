@@ -4,7 +4,10 @@ define(function (require) {
     var _ = require('lodash');
     var $ = require('jquery');
     var errors = require('ui/errors');
-
+var Notifier = require('ui/notify/notifier');
+    var notify = new Notifier({
+      location: 'Index Patterns'
+    });
     var PointSeriesChart = Private(require('ui/vislib/visualizations/_point_series_chart'));
     var TimeMarker = Private(require('ui/vislib/visualizations/time_marker'));
 
@@ -20,10 +23,61 @@ define(function (require) {
      */
     _.class(LineChart).inherits(PointSeriesChart);
     function LineChart(handler, chartEl, chartData) {
+      
+      // calculate average.
+      if(handler._attr.showAverageLine && chartData.series.length > 0){
+        notify.log('chartData', chartData.series);
+
+        var avgSeries = $.extend(true, {}, chartData.series[0]);
+        var chartDataSeries = chartData.series;
+        var valueDict = {};
+        for(var i=0; i<chartDataSeries.length; i++){
+          var eachSeries = chartDataSeries[i].values;
+          notify.log('eachSeries', eachSeries);
+          for(var j=0; j<eachSeries.length; j++){
+            var eachValue = eachSeries[j];
+            notify.log('eachValue', eachValue);
+            if (!(eachValue.xi in valueDict)){
+              valueDict[eachValue.xi] = {
+                "xi": eachValue.xi,
+                "x": eachValue.x,
+                "ySum": eachValue.y,
+                "yCnt": 1,
+                "appConfig": eachValue.aggConfig,
+                "appConfigResult": eachValue.aggConfigResult,
+                "series": "Average",
+                "extraMetrics": [],
+                "yScale": null,
+                "z": undefined
+              };
+              notify.log('eachValue', valueDict);
+            }
+            else{
+              valueDict[eachValue.xi]['ySum'] += eachValue.y;
+              valueDict[eachValue.xi]['yCnt'] += 1;  
+            }
+          }
+        }
+
+
+        avgSeries.label = 'Average';
+        avgSeries.values = [];
+        for(var key in valueDict){
+          var newValueDict = valueDict[key];
+          newValueDict['y'] = newValueDict['ySum']/parseFloat(newValueDict['yCnt']);
+          avgSeries.values.push(newValueDict);
+        }
+        notify.log('valueDict ', valueDict);
+        notify.log('chartDataSeries ', chartDataSeries);
+        notify.log('avgSeries ', avgSeries);
+        chartData.series.push(avgSeries);
+      }
+
+      
       if (!(this instanceof LineChart)) {
         return new LineChart(handler, chartEl, chartData);
       }
-
+      
       LineChart.Super.apply(this, arguments);
 
       // Line chart specific attributes
