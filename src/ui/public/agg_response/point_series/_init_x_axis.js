@@ -1,9 +1,24 @@
+var Notifier = require('ui/notify/notifier');
+var notify = new Notifier({
+      location: 'Axis'
+    });
+
 define(function () {
   return function PointSeriesInitX() {
     return function initXAxis(chart) {
       var x = chart.aspects.x;
       chart.xAxisFormatter = x.agg ? x.agg.fieldFormatter() : String;
-      chart.xAxisLabel = x.col.title;
+      notify.log('x.col.title', x.col.title);
+      switch(x.col.title){
+        case 'manager_name.raw':
+          chart.xAxisLabel = 'manager';
+          break;
+        case 'form_description.raw':
+          chart.xAxisLabel = 'each form';
+          break;
+        default:
+          chart.xAxisLabel = x.col.title;
+      }
 
       if (!x.agg || !x.agg.type.ordered) return;
 
