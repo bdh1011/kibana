@@ -1,7 +1,7 @@
 var Notifier = require('ui/notify/notifier');
 var notify = new Notifier({
-      location: 'Axis'
-    });
+  location: 'Axis'
+});
 
 define(function (require) {
   return function PointSeriesInitYAxis() {
@@ -18,8 +18,8 @@ define(function (require) {
 
       } else {
         chart.yAxisFormatter = y.agg.fieldFormatter();
-        notify.log('y.col.title', y.col.title == 'Average point_percentage');
-        switch(y.col.title){
+        notify.log('y.col.title', y.col.title === 'Average point_percentage');
+        switch (y.col.title) {
           case 'Average point_percentage':
             chart.yAxisLabel = 'point percentage';
             break;

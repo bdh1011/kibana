@@ -1,7 +1,7 @@
 var Notifier = require('ui/notify/notifier');
 var notify = new Notifier({
-      location: 'Axis'
-    });
+  location: 'Axis'
+});
 
 define(function () {
   return function PointSeriesInitX() {
@@ -9,7 +9,7 @@ define(function () {
       var x = chart.aspects.x;
       chart.xAxisFormatter = x.agg ? x.agg.fieldFormatter() : String;
       notify.log('x.col.title', x.col.title);
-      switch(x.col.title){
+      switch (x.col.title) {
         case 'manager_name.raw':
           chart.xAxisLabel = 'manager';
           break;
