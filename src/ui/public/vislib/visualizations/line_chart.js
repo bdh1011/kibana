@@ -96,6 +96,7 @@ var Notifier = require('ui/notify/notifier');
      * @returns {D3.Selection} SVG circles with event listeners attached
      */
     LineChart.prototype.addCircleEvents = function (element, svg) {
+	return
       var events = this.events;
       var isBrushable = events.isBrushable();
       var brush = isBrushable ? events.addBrushEvent(svg) : undefined;

@@ -119,6 +119,7 @@ define(function (require) {
      * @returns {D3.Selection} circles with event listeners attached
      */
     AreaChart.prototype.addCircleEvents = function (element, svg) {
+	return;
       var events = this.events;
       var isBrushable = events.isBrushable();
       var brush = isBrushable ? events.addBrushEvent(svg) : undefined;
