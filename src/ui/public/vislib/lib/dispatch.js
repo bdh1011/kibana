@@ -251,7 +251,7 @@ define(function (require) {
      * @returns {*} Returns a D3 brush function and a SVG with a brush group attached
      */
     Dispatch.prototype.createBrush = function (xScale, svg) {
-	return;
+      return;
       var self = this;
       var attr = self.handler._attr;
       var height = attr.height;

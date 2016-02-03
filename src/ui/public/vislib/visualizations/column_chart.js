@@ -234,7 +234,7 @@ define(function (require) {
      * @returns {D3.Selection} rect with event listeners attached
      */
     ColumnChart.prototype.addBarEvents = function (element, svg) {
-	return;
+      return;
       var events = this.events;
       var isBrushable = events.isBrushable();
       var brush = isBrushable ? events.addBrushEvent(svg) : undefined;

@@ -24,9 +24,9 @@ define(function (require) {
             $cell.addClass('cell-hover');
             $cell.attr('ng-click', 'clickHandler($event)');
             $cell.scope.clickHandler = function (event) {
-		return;
-              if ($(event.target).is('a')) return; // Don't add filter if a link was clicked
-              clickHandler({ point: { aggConfigResult: aggConfigResult } });
+              return;
+              //if ($(event.target).is('a')) return; // Don't add filter if a link was clicked
+              //clickHandler({ point: { aggConfigResult: aggConfigResult } });
             };
             return $compile($cell)($cell.scope);
           };
