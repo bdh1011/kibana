@@ -28,11 +28,11 @@ define(function (require) {
         var avgSeries = $.extend(true, {}, chartData.series[0]);
         var chartDataSeries = chartData.series;
         var valueDict = {};
-        for ( var i = 0; i < chartDataSeries.length; i++) {
+        for (var i = 0; i < chartDataSeries.length; i++) {
           var eachSeries = chartDataSeries[i].values;
-          for ( var j = 0; j < eachSeries.length; j++) {
+          for (var j = 0; j < eachSeries.length; j++) {
             var eachValue = eachSeries[j];
-            if (!(eachValue.xi in valueDict)){
+            if (!(eachValue.xi in valueDict)) {
               valueDict[eachValue.xi] = {
                 'xi': eachValue.xi,
                 'x': eachValue.x,
@@ -46,9 +46,9 @@ define(function (require) {
                 'z': undefined
               };
             }
-            else{
-              valueDict[eachValue.xi]['ySum'] += eachValue.y;
-              valueDict[eachValue.xi]['yCnt'] += 1;  
+            else {
+              valueDict[eachValue.xi].ySum += eachValue.y;
+              valueDict[eachValue.xi].yCnt += 1;
             }
           }
         }
@@ -56,19 +56,19 @@ define(function (require) {
 
         avgSeries.label = 'Average';
         avgSeries.values = [];
-        for ( var key in valueDict) {
-          var newValueDict = valueDict[key];
-          newValueDict['y'] = newValueDict['ySum']/parseFloat(newValueDict['yCnt']);
-          avgSeries.values.push(newValueDict);
+        for (var key in valueDict) {
+          if (valueDict.hasOwnProperty(key)) {
+            var newValueDict = valueDict[key];
+            newValueDict.y = newValueDict.ySum / parseFloat(newValueDict.yCnt);
+            avgSeries.values.push(newValueDict);
+          }
         }
         chartData.series.push(avgSeries);
       }
 
-      
       if (!(this instanceof LineChart)) {
         return new LineChart(handler, chartEl, chartData);
       }
-      
       LineChart.Super.apply(this, arguments);
 
       // Line chart specific attributes
