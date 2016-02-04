@@ -25,18 +25,14 @@ define(function (require) {
     function LineChart(handler, chartEl, chartData) {
       // calculate average.
       if (handler._attr.showAverageLine && chartData.series.length > 0) {
-        notify.log('chartData', chartData.series);
-
         var avgSeries = $.extend(true, {}, chartData.series[0]);
         var chartDataSeries = chartData.series;
         var valueDict = {};
-        for (var i = 0; i < chartDataSeries.length; i++) {
+        for ( var i = 0; i < chartDataSeries.length; i++) {
           var eachSeries = chartDataSeries[i].values;
-          notify.log('eachSeries', eachSeries);
-          for (var j = 0; j < eachSeries.length; j++) {
+          for ( var j = 0; j < eachSeries.length; j++) {
             var eachValue = eachSeries[j];
-            notify.log('eachValue', eachValue);
-            if (!(eachValue.xi in valueDict)) {
+            if (!(eachValue.xi in valueDict)){
               valueDict[eachValue.xi] = {
                 'xi': eachValue.xi,
                 'x': eachValue.x,
@@ -49,11 +45,10 @@ define(function (require) {
                 'yScale': null,
                 'z': undefined
               };
-              notify.log('eachValue', valueDict);
             }
-            else {
-              valueDict[eachValue.xi].ySum += eachValue.y;
-              valueDict[eachValue.xi].yCnt += 1;
+            else{
+              valueDict[eachValue.xi]['ySum'] += eachValue.y;
+              valueDict[eachValue.xi]['yCnt'] += 1;  
             }
           }
         }
@@ -61,21 +56,21 @@ define(function (require) {
 
         avgSeries.label = 'Average';
         avgSeries.values = [];
-        for (var index = 0; index < valueDict.length; index++) {
-          var newValueDict = valueDict[valueDict[index]];
-          newValueDict.y = newValueDict.ySum / parseFloat(newValueDict.yCnt);
+        for ( var key in valueDict) {
+          var newValueDict = valueDict[key];
+          newValueDict['y'] = newValueDict['ySum']/parseFloat(newValueDict['yCnt']);
           avgSeries.values.push(newValueDict);
         }
-        notify.log('valueDict ', valueDict);
-        notify.log('chartDataSeries ', chartDataSeries);
-        notify.log('avgSeries ', avgSeries);
         chartData.series.push(avgSeries);
       }
 
+      
       if (!(this instanceof LineChart)) {
         return new LineChart(handler, chartEl, chartData);
       }
+      
       LineChart.Super.apply(this, arguments);
+
       // Line chart specific attributes
       this._attr = _.defaults(handler._attr || {}, {
         interpolate: 'linear',
