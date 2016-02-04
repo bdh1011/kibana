@@ -1,3 +1,8 @@
+var Notifier = require('ui/notify/notifier');
+var notify = new Notifier({
+  location: 'Axis'
+});
+
 define(function (require) {
   return function TabbedAggResponseWriterProvider(Private) {
     var _ = require('lodash');
@@ -70,6 +75,7 @@ define(function (require) {
       var parent = this.splitStack[0];
 
       if (group) {
+        // notify.log('table.title', (table.fieldFormatter()(key)) + ': ' + agg.makeLabel());
         table.aggConfig = agg;
         table.key = key;
         table.title =  (table.fieldFormatter()(key)) + ': ' + agg.makeLabel();
@@ -259,7 +265,28 @@ define(function (require) {
 
       // give the columns some metadata
       columns.map(function (col) {
-        col.title = col.aggConfig.makeLabel();
+        // notify.log('col.title', col.aggConfig.makeLabel())
+        switch (col.aggConfig.makeLabel()) {
+          case 'form_description.raw: Descending':
+            col.title = 'Form';
+            break;
+          case 'manager_name.raw: Descending':
+            col.title = 'Manager';
+            break;
+          case 'housekeeper_name.raw: Descending':
+            col.title = 'Housekeeper';
+            break;
+          case 'Average get_point':
+            col.title = 'Average point';
+            break;
+          case 'Average point_percentage':
+            col.title = 'Average point percentage';
+            break;
+          default:
+            col.title = col.aggConfig.makeLabel();
+        }
+        // notify.log('col.title', col.title)
+
       });
 
       // walk the tree and write the columns to each table
