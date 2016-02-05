@@ -268,7 +268,7 @@ define(function (require) {
         // notify.log('col.title', col.aggConfig.makeLabel())
         switch (col.aggConfig.makeLabel()) {
           case 'form_description.raw: Descending':
-            col.title = 'Form';
+            col.title = 'Item Description';
             break;
           case 'manager_name.raw: Descending':
             col.title = 'Manager';
@@ -277,10 +277,13 @@ define(function (require) {
             col.title = 'Housekeeper';
             break;
           case 'Average get_point':
-            col.title = 'Average point';
+            col.title = 'Missed %';
             break;
+          // case 'Count':
+          //   col.title = 'Missed #'
+          //   break;
           case 'Average point_percentage':
-            col.title = 'Average point percentage';
+            col.title = 'Avg(Overall Percentage)';
             break;
           default:
             col.title = col.aggConfig.makeLabel();

@@ -19,6 +19,9 @@ define(function () {
         default:
           chart.xAxisLabel = x.col.title;
       }
+      if (x.col.title.indexOf('timestamp') > -1) {
+        chart.xAxisLabel = 'Date';
+      }
 
       if (!x.agg || !x.agg.type.ordered) return;
 

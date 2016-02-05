@@ -21,10 +21,10 @@ define(function (require) {
         notify.log('y.col.title', y.col.title === 'Average point_percentage');
         switch (y.col.title) {
           case 'Average point_percentage':
-            chart.yAxisLabel = 'point percentage';
+            chart.yAxisLabel = 'Avg(Overfall Percentage)';
             break;
           case 'Sum of form_point':
-            chart.yAxisLabel = 'missed point';
+            chart.yAxisLabel = 'Count(Missed #)';
             break;
           default:
             chart.yAxisLabel = y.col.title;
